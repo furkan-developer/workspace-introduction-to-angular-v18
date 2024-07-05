@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { HousingLocation } from '../housing-location';
+import { HousingLocationComponent } from '../housing-location/housing-location.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [HousingLocationComponent, CommonModule],
   template: `
     <section>
       <input type="text" placeholder="Filter by ciy">
       <button type="button">Search</button>
     </section>
     <section class="results">
-      <!-- searching details will be placed in here as distinct component -->
+    <app-housing-location
+        *ngFor="let housingLocation of housingLocations"
+        [housingLocation]="housingLocation"
+      ></app-housing-location>
     </section>
   `,
   styleUrl: './home.component.css'
