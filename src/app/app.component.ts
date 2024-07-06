@@ -18,7 +18,7 @@ import { HomeComponent } from './home/home.component';
     </svg>
   </header>
     <section>
-      <app-home></app-home>
+      <router-outlet></router-outlet>
     </section>
   </main>`,
   styleUrl: './app.component.css'
