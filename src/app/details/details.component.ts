@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../housing-location';
 import { HousingService } from '../housing.service';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   template: `
     <article>
     <img class="listing-photo" [src]="housingLocation?.photo" [alt]="housingLocation?.name">
@@ -24,7 +25,17 @@ import { HousingService } from '../housing.service';
     </section>
     <section class="listing-apply">
       <h2 class="section-heading">Apply now to live here</h2>
-      <button class="primary" type="button">Apply now</button>
+      <form [formGroup]="applyForm" (submit)="onSubmit()">
+        <label for="firstName">FirstName:</label>
+        <input id="firstName" type="text" formControlName="firstName">
+
+        <label for="lastName">LastName:</label>
+        <input id="lastName" type="text" formControlName="lastName">
+
+        <label for="email">Email:</label>
+        <input id="email" type="email" formControlName="email">
+        <button type="submit" class="primary">Apply now</button>
+      </form>
     </section>
   </article>
   `,
@@ -34,11 +45,27 @@ export class DetailsComponent {
   private housingLocationId!: number;
   housingLocation: HousingLocation | undefined;
 
+  applyForm = new FormGroup({
+    firstName: new FormControl(''),
+    lastName: new FormControl(''),
+    email: new FormControl(''),
+  });
+
   constructor(private route: ActivatedRoute,private housingService:HousingService) {
      route.params.subscribe(params => {
       this.housingLocationId = params['id']
     });
 
     this.housingLocation = housingService.getHousingLocationById(Number(this.housingLocationId));
+  }
+
+  onSubmit(){
+    // TODO: handle datas inside applyFrom that is represent state of form
+
+    console.log({
+      firstName: this.applyForm.value.firstName ?? '',
+      lastName: this.applyForm.value.lastName ?? '',
+      email: this.applyForm.value.email ?? ''
+    });
   }
 }
