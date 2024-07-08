@@ -56,7 +56,16 @@ export class DetailsComponent {
       this.housingLocationId = params['id']
     });
 
-    this.housingLocation = housingService.getHousingLocationById(Number(this.housingLocationId));
+    housingService
+      .getHousingLocationById(Number(this.housingLocationId))
+      .subscribe({
+        next: (data) => {
+          this.housingLocation = data;
+        },
+        error: (error) => {
+          console.error('Error fetching housing location', error);
+        },
+      });
   }
 
   onSubmit(){
