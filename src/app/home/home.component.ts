@@ -21,10 +21,17 @@ import { HousingService } from '../housing.service';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  housingLocations: HousingLocation[];
+  housingLocations!: HousingLocation[];
   housingService: HousingService = inject(HousingService);
 
   constructor() {
-    this.housingLocations = this.housingService.getAllHousingLocations();
+    this.housingService.getAllHousingLocations().subscribe({
+      next: (data) => {
+        this.housingLocations = data;
+      },
+      error: (error) => {
+        console.error('Error fetching housing location', error);
+      },
+    });
   }
 }
