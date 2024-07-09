@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HousingLocation } from '../housing-location';
 import { HousingService } from '../housing.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-details',
@@ -41,17 +41,12 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
   `,
   styleUrl: './details.component.css'
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   private housingLocationId!: number;
   housingLocation: HousingLocation | undefined;
+  applyForm!: FormGroup;
 
-  applyForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-  });
-
-  constructor(private route: ActivatedRoute,private housingService:HousingService) {
+  constructor(private route: ActivatedRoute,private housingService:HousingService, private fb: FormBuilder) {
      route.params.subscribe(params => {
       this.housingLocationId = params['id']
     });
@@ -66,6 +61,14 @@ export class DetailsComponent {
           console.error('Error fetching housing location', error);
         },
       });
+  }
+
+  ngOnInit(): void {
+    this.applyForm = this.fb.group({
+      firstName: '',
+      lastName: '',
+      email: '',
+    });
   }
 
   onSubmit(){
