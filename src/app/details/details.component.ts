@@ -27,7 +27,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
       <h2 class="section-heading">Apply now to live here</h2>
       <form [formGroup]="applyForm" (submit)="onSubmit()">
         <label for="firstName">FirstName:</label>
-        <input id="firstName" type="text" formControlName="firstName">
+        <input id="firstName" type="text" formControlName="firstName" required minlength="3">
          @if (firstName?.invalid && (firstName?.dirty || firstName?.touched)) {
           @if (firstName?.hasError('required')) {
             <div>First name is required</div>
@@ -38,7 +38,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
         }
 
         <label for="lastName">LastName:</label>
-        <input id="lastName" type="text" formControlName="lastName">
+        <input id="lastName" type="text" formControlName="lastName" required minlength="3">
         @if (lastName?.invalid && (lastName?.dirty || lastName?.touched)) {
           @if (lastName?.hasError('required')) {
             <div>Last name is required</div>
@@ -49,7 +49,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
         }
 
         <label for="email">Email:</label>
-        <input id="email" type="email" formControlName="email">
+        <input id="email" type="email" formControlName="email" required>
          @if (email?.invalid && (email?.dirty || email?.touched)) {
           @if (email?.hasError('required')) {
             <div>Email is required</div>
