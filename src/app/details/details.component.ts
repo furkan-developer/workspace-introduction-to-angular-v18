@@ -28,33 +28,33 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
       <form [formGroup]="applyForm" (submit)="onSubmit()">
         <label for="firstName">FirstName:</label>
         <input id="firstName" type="text" formControlName="firstName">
-         @if (applyForm.controls['firstName'].invalid && (applyForm.get('firstName')?.dirty || applyForm.get('firstName')?.touched)) {
-          @if (applyForm.controls['firstName'].hasError('required')) {
+         @if (firstName?.invalid && (firstName?.dirty || firstName?.touched)) {
+          @if (firstName?.hasError('required')) {
             <div>First name is required</div>
           }
-          @else if(applyForm.controls['firstName'].hasError('minlength')) {
+          @else if(firstName?.hasError('minlength')) {
             <div> First name length must be at least 3 characters</div>
           }
         }
 
         <label for="lastName">LastName:</label>
         <input id="lastName" type="text" formControlName="lastName">
-        @if (applyForm.controls['lastName'].invalid && (applyForm.get('lastName')?.dirty || applyForm.get('lastName')?.touched)) {
-          @if (applyForm.controls['lastName'].hasError('required')) {
+        @if (lastName?.invalid && (lastName?.dirty || lastName?.touched)) {
+          @if (lastName?.hasError('required')) {
             <div>Last name is required</div>
           }
-          @else if(applyForm.controls['lastName'].hasError('minlength')) {
+          @else if(lastName?.hasError('minlength')) {
             <div>Last name length must be at least 3 characters</div>
           }
         }
 
         <label for="email">Email:</label>
         <input id="email" type="email" formControlName="email">
-         @if (applyForm.controls['email'].invalid && (applyForm.get('email')?.dirty || applyForm.get('email')?.touched)) {
-          @if (applyForm.controls['email'].hasError('required')) {
+         @if (email?.invalid && (email?.dirty || email?.touched)) {
+          @if (email?.hasError('required')) {
             <div>Email is required</div>
           }
-          @else if(applyForm.controls['email'].hasError('email')) {
+          @else if(email?.hasError('email')) {
             <div>Email is invalid</div>
           }
         }
@@ -85,6 +85,18 @@ export class DetailsComponent implements OnInit {
           console.error('Error fetching housing location', error);
         },
       });
+  }
+
+  get firstName(){
+    return this.applyForm.get('firstName');
+  }
+
+  get lastName(){
+    return this.applyForm.get('lastName');
+  }
+
+  get email(){
+    return this.applyForm.get('email');
   }
 
   ngOnInit(): void {
