@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { HousingLocation } from '../housing-location';
 import { HousingLocationComponent } from '../housing-location/housing-location.component';
 import { HousingService } from '../housing.service';
@@ -27,7 +27,7 @@ import { HousingService } from '../housing.service';
   `,
   styleUrl: './home.component.css',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   housingLocations: HousingLocation[] = [];
   filteredHousingLocation: HousingLocation[] = [];
   housingService: HousingService = inject(HousingService);
@@ -35,6 +35,9 @@ export class HomeComponent {
   @ViewChild('cityFiltering') cityFiltering!: ElementRef;
 
   constructor() {
+  }
+
+  ngOnInit(): void {
     this.housingService.getAllHousingLocations().subscribe({
       next: (data) => {
         this.housingLocations = this.filteredHousingLocation = data;
