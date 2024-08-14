@@ -27,15 +27,14 @@ import { HousingService } from '../housing.service';
   `,
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   housingLocations: HousingLocation[] = [];
   filteredHousingLocation: HousingLocation[] = [];
   housingService: HousingService = inject(HousingService);
 
   @ViewChild('cityFiltering') cityFiltering!: ElementRef;
 
-  constructor() {
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.housingService.getAllHousingLocations().subscribe({
@@ -48,6 +47,11 @@ export class HomeComponent implements OnInit{
     });
   }
 
+  /**
+   * This is a event handler to handle change event when cityFiltering input element raised the relevant event.
+   *
+   * The event handler perform house filtering by house location whenever to leave from the input element.
+   */
   onSearch() {
     let nativeElement = this.cityFiltering.nativeElement;
 
